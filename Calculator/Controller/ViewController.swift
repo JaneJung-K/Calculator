@@ -31,15 +31,13 @@ class ViewController: UIViewController {
         isFinishedTypingNumber = true
         
         if let calcMethod = sender.currentTitle {
-            if calcMethod == "+/-" {
-               displayValue *= -1
+           
+            let calculator = CalculatorLogic(number: displayValue)
+             
+            guard let result = calculator.calculate(symbol: calcMethod) else {
+                fatalError("The result of the calculationis nil.")
             }
-            if calcMethod == "AC" {
-                displayLabel.text = "0"
-            }
-            if calcMethod == "%" {
-                displayValue *= 0.01
-            }
+            displayValue = result
         }
     
     }
@@ -64,8 +62,9 @@ class ViewController: UIViewController {
                         return
                     }
                 }
+                displayLabel.text = displayLabel.text! + numValue
             }
-            displayLabel.text = displayLabel.text! + numValue
+            
             
         }
     }
